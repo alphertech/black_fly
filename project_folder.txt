@@ -1,0 +1,50 @@
+black_fly/
+├── lib/
+│   ├── main.dart
+│   ├── models/
+│   │   ├── user_model.dart
+│   │   ├── server_model.dart
+│   │   ├── notification_model.dart
+│   │   └── connection_stats.dart
+│   ├── screens/
+│   │   ├── splash_screen.dart
+│   │   ├── onboarding_screen.dart
+│   │   ├── auth_screen.dart
+│   │   ├── dashboard_screen.dart
+│   │   ├── servers_screen.dart
+│   │   ├── stats_screen.dart
+│   │   ├── profile_screen.dart
+│   │   ├── subscription_screen.dart
+│   │   ├── settings_screen.dart
+│   │   └── support_screen.dart
+│   ├── widgets/
+│   │   ├── bottom_nav_bar.dart
+│   │   ├── sidebar_menu.dart
+│   │   ├── server_card.dart
+│   │   ├── connection_card.dart
+│   │   ├── notification_panel.dart
+│   │   ├── custom_button.dart
+│   │   ├── custom_text_field.dart
+│   │   └── modals.dart
+│   ├── providers/
+│   │   ├── auth_provider.dart
+│   │   ├── vpn_provider.dart
+│   │   ├── server_provider.dart
+│   │   ├── theme_provider.dart
+│   │   └── notification_provider.dart
+│   ├── services/
+│   │   ├── api_service.dart
+│   │   ├── vpn_service.dart
+│   │   └── storage_service.dart
+│   ├── utils/
+│   │   ├── constants.dart
+│   │   ├── theme.dart
+│   │   └── helpers.dart
+│   └── i18n/
+│       └── translations.dart
+├── assets/
+│   ├── images/
+│   │   └── flags/
+│   └── fonts/
+├── pubspec.yaml
+└── README.md
