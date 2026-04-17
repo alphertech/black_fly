@@ -18,25 +18,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       icon: Icons.security,
       title: 'Complete Privacy',
       description: 'Hide your IP address and browse anonymously with our military-grade encryption.',
-      color: Color(0xFF2A9D8F),
+      color: const Color(0xFF2A9D8F),
     ),
     OnboardingData(
       icon: Icons.shield,
       title: 'Military-Grade Security',
       description: 'AES-256 encryption with strict no-logs policy. Your data stays yours.',
-      color: Color(0xFF2A9D8F),
+      color: const Color(0xFF2A9D8F),
     ),
     OnboardingData(
       icon: Icons.bolt,
       title: 'Lightning Fast',
       description: '24 servers worldwide with unlimited bandwidth. No speed caps.',
-      color: Color(0xFF2A9D8F),
+      color: const Color(0xFF2A9D8F),
     ),
     OnboardingData(
       icon: Icons.rocket,
       title: 'Ready to Go?',
       description: 'Join millions who trust SEYTRONS for their online privacy.',
-      color: Color(0xFF2A9D8F),
+      color: const Color(0xFF2A9D8F),
     ),
   ];
 
@@ -200,7 +200,7 @@ class OnboardingPage extends StatelessWidget {
             width: 120,
             height: 120,
             decoration: BoxDecoration(
-              color: data.color.withOpacity(0.1),
+              color: data.color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(30),
             ),
             child: Icon(

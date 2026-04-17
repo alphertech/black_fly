@@ -1,69 +1,33 @@
-# SEYTRONS VPN App - Complete Functional APK Plan & Progress - BLACKBOXAI
+# APK Build Progress - BLACKBOXAI (Approved Plan Breakdown)
 
 ## Current Status
-- ✅ Plan approved by user
-- Initial `flutter analyze`: ~39-54 lint errors (unused imports, deprecations, refs)
-- [ ] No android/ folder: Can't build APK yet
-- VPN: Mock only - no real tunnel
+- [x] Plan approved and TODO.md created
+- [x] pubspec.yaml reviewed (deps OK, some outdated but compatible)
+- [x] flutter pub get **COMPLETE** (success after ~2min, 38 outdated packages noted)
+- [x] flutter analyze **COMPLETE** (7 issues: 1 unused field, 3 use_build_context_synchronously, 2 deprecated Radio, 1 expected_token syntax)
+- [ ] Fix 7 lint errors (detailed below)
+- [ ] User fixes Android cmdline-tools + flutter doctor --android-licenses
+- [ ] flutter test
+- [ ] flutter build apk --release
+- [ ] APK ready at build/app/outputs/flutter-apk/app-release.apk
 
-## TODO Steps (Execute Sequentially)
+## Lint Fixes Plan (Step 1/4 - Code Edits)
+1. lib/providers/server_provider.dart: Remove unused _favoriteIds List<String>
+2. lib/screens/auth_screen.dart: Fix syntax error line ~246 (missing ')'), fix 3 use_build_context_synchronously (use if(mounted) before context calls post-async)
+3. lib/screens/servers_screen.dart: Replace deprecated Radio with RadioGroup (Flutter 3.32+)
+4. Re-run flutter analyze → 0 issues
 
-### Step 1: Dependencies & Platforms (Critical for Build/VPN) ✅ COMPLETE
-- ✅ Update pubspec.yaml (VPN deps ready, wireguard commented - not on pub.dev)
-- ✅ `flutter pub get` (success)
-- ✅ `flutter create . --platforms android`
-- ✅ `flutter doctor -v` (Flutter OK, Android cmdline-tools missing - user fix)
+**Next:** Will edit files after reading them fully. Then mark [x], run tests/build.
 
-### Step 2: Fix All 39+ Errors/Lints (Compilation Clean)
-- [ ] Run `flutter analyze` → Identify exact issues
-- [ ] Edit providers: lib/providers/vpn_provider.dart, server_provider.dart (add missing methods like getFilteredServers, getters)
-- [ ] Fix screens: dashboard_screen.dart, servers_screen.dart (variable refs, provider calls)
-- [ ] Widgets: location_card.dart, side_menu.dart (Icons.crown → FontAwesome, deprecations)
-- [ ] test/widget_test.dart: Update 'MyApp' to 'SEYTRONSApp'
-- [ ] Remove unused imports, add const
-- [ ] Re-run `flutter analyze` → 0 errors
+## Environment Fix (User Action Required)
+flutter doctor shows missing cmdline-tools. After fixes:
+```
+sdkmanager "cmdline-tools;latest"  # or manual download/unzip to %ANDROID_HOME%/cmdline-tools/latest/
+flutter doctor --android-licenses
+```
 
-### Step 3: Real VPN Functionality
-... (rest of steps unchanged)
+## Post-Build
+APK will be installable on Android devices (minSdk check pending). VPN mock-only (no real tunnel yet).
 
-### Step 2: Fix All 39+ Errors/Lints (Compilation Clean)
+Updated after each step.
 
-- [ ] Run `flutter analyze` → Identify exact issues
-- [ ] Edit providers: lib/providers/vpn_provider.dart, server_provider.dart (add missing methods like getFilteredServers, getters)
-- [ ] Fix screens: dashboard_screen.dart, servers_screen.dart (variable refs, provider calls)
-- [ ] Widgets: location_card.dart, side_menu.dart (Icons.crown → FontAwesome, deprecations)
-- [ ] test/widget_test.dart: Update 'MyApp' to 'SEYTRONSApp'
-- [ ] Remove unused imports, add const
-- [ ] Re-run `flutter analyze` → 0 errors
-
-### Step 3: Real VPN Functionality
-
-- [ ] Update lib/services/vpn_service.dart: Integrate wireguard_flutter_android - generate mock WG configs for servers (private_key, endpoint from ServerModel), Vpn.connect(config), handle onStatusChanged for state/speed/IP
-- [ ] Add permission_handler: request VPN/foreground/overlay perms on connect
-- [ ] Update lib/providers/vpn_provider.dart: Use real service, expose actual metrics (remove mocks)
-- [ ] Constants: Add mock WG configs per server
-
-### Step 4: Android Config
-
-- [ ] Edit android/app/src/main/AndroidManifest.xml: `<uses-permission android:name=\"android.permission.BIND_VPN_SERVICE\" />`, `<uses-permission android:name=\"android.permission.FOREGROUND_SERVICE\" />`, service declaration
-- [ ] android/app/build.gradle: minSdkVersion 24+, proguard false for VPN
-- [ ] Test: `flutter run -d android`
-
-### Step 5: Feature Polish & Auth/Mocks
-
-- [ ] AuthProvider: Implement shared_preferences login/register
-- [ ] ServerProvider: Load mock servers with WG data, filter/fav
-- [ ] Dashboard/Stats: Real network stats via network_info_plus + VPN state
-- [ ] Settings: Auto-connect logic
-- [ ] Onboarding/Profile/Subscription: Mock flows
-
-### Step 6: Test & Build
-
-- [ ] `flutter test`
-- [ ] `flutter analyze --fatal-warnings` (clean)
-- [ ] `flutter build apk --release`
-- [ ] Verify APK installs/runs, VPN connects (emulator/device)
-
-## Progress Tracking
-
-Update [x] on complete. Next command after each step.

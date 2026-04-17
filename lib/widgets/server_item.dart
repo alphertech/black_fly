@@ -21,11 +21,11 @@ class ServerItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: const Color(0x0D000000),
+            color: Color(0x0D000000),
             blurRadius: 5,
-            offset: const Offset(0, 1),
+            offset: Offset(0, 1),
           ),
         ],
       ),

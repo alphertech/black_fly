@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'providers/auth_provider.dart';
 import 'providers/vpn_provider.dart';
 import 'providers/server_provider.dart';
 import 'providers/theme_provider.dart';
 import 'providers/notification_provider.dart';
 import 'screens/splash_screen.dart';
-import 'utils/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

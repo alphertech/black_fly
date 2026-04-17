@@ -323,13 +323,11 @@ class _AuthScreenState extends State<AuthScreen>
             label: 'Confirm password',
             prefixIcon: Icons.lock,
             obscureText: _obscureRegConfirmPassword,
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _obscureRegConfirmPassword
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                  ),
-                  onPressed: () {
+            suffixIcon: IconButton(
+              icon: Icon(
+                _obscureRegConfirmPassword ? Icons.visibility : Icons.visibility_off,
+              ),
+              onPressed: () {
                 setState(() {
                   _obscureRegConfirmPassword = !_obscureRegConfirmPassword;
                 });
@@ -354,27 +352,27 @@ class _AuthScreenState extends State<AuthScreen>
                 },
                 activeColor: const Color(0xFF2A9D8F),
               ),
-              Expanded(
+              const Expanded(
                 child: Text.rich(
                   TextSpan(
                     children: [
-                      const TextSpan(
+                      TextSpan(
                         text: 'I agree to the ',
                         style: TextStyle(color: Colors.grey),
                       ),
                       TextSpan(
                         text: 'Terms of Service',
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Color(0xFF2A9D8F),
                         ),
                       ),
-                      const TextSpan(
+                      TextSpan(
                         text: ' and ',
                         style: TextStyle(color: Colors.grey),
                       ),
                       TextSpan(
                         text: 'Privacy Policy',
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Color(0xFF2A9D8F),
                         ),
                       ),
@@ -424,16 +422,20 @@ class _AuthScreenState extends State<AuthScreen>
       setState(() => _isLoading = false);
 
       if (success && mounted) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const DashboardScreen()),
-        );
+        if (context.mounted) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => const DashboardScreen()),
+          );
+        }
       } else if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Invalid email or password'),
-            backgroundColor: Colors.red,
-          ),
-        );
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Invalid email or password'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
       }
     }
   }
@@ -453,21 +455,25 @@ class _AuthScreenState extends State<AuthScreen>
       setState(() => _isLoading = false);
 
       if (success && mounted) {
-        _tabController.animateTo(0);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Account created successfully! Please login.'),
-            backgroundColor: Colors.green,
-          ),
-        );
+        if (context.mounted) {
+          _tabController.animateTo(0);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Account created successfully! Please login.'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
         _loginEmailController.text = _regEmailController.text;
       } else if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Registration failed. Email may already exist.'),
-            backgroundColor: Colors.red,
-          ),
-        );
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Registration failed. Email may already exist.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
       }
     } else if (!_agreeTerms) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -513,7 +519,7 @@ class _AuthScreenState extends State<AuthScreen>
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     authProvider.setMockUser();
 
-    if (mounted) {
+    if (mounted && context.mounted) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const DashboardScreen()),
       );

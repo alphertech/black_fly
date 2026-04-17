@@ -14,11 +14,11 @@ class StatsCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: const Color(0x0D000000),
+            color: Color(0x0D000000),
             blurRadius: 10,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),

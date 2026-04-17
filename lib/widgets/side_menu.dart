@@ -162,9 +162,9 @@ class SideMenu extends StatelessWidget {
   Widget _buildStorageInfo() {
     return Column(
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
+          children: [
             Text('Data Usage', style: TextStyle(fontSize: 12, color: Colors.grey)),
             Text('65GB / 100GB', style: TextStyle(fontSize: 12, color: Colors.grey)),
           ],

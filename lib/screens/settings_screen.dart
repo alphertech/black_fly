@@ -208,7 +208,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       subtitle: Text(subtitle),
       value: value,
       onChanged: onChanged,
-      activeColor: Theme.of(context).primaryColor,
+      activeThumbColor: Theme.of(context).primaryColor,
     );
   }
 

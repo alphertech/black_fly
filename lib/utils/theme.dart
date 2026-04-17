@@ -144,7 +144,7 @@ cardTheme: CardThemeData(
       prefixIconColor: Colors.grey,
       suffixIconColor: Colors.grey,
     ),
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: lightSurface,
       selectedItemColor: primaryColor,
       unselectedItemColor: Colors.grey,

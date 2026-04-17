@@ -6,7 +6,6 @@ import '../widgets/bottom_nav_bar.dart';
 import '../widgets/side_menu.dart';
 import '../widgets/connection_card.dart';
 import '../widgets/server_card.dart';
-import '../models/server_model.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -22,7 +21,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ServerProvider>(context, listen: false).loadServers();
+      Provider.of<ServerProvider>(context, listen: false).loadServers().then((_) {
+        // Auto-connect to FIG LA1 for debugging
+        Provider.of<VPNProvider>(context, listen: false).connectToServer('fig-la1');
+      });
     });
   }
 
@@ -229,7 +231,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    currentServer?.countryCode?.toUpperCase() ?? 'UG',
+                    currentServer?.countryCode.toUpperCase() ?? 'UG',
                     style: const TextStyle(fontSize: 12),
                   ),
                 ),

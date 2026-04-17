@@ -154,13 +154,13 @@ class _ServersScreenState extends State<ServersScreen> {
             ),
             const SizedBox(height: 16),
             ...['All', 'Recommended', 'Fastest', 'Favorites', 'Europe', 'Asia', 'Americas'].map((filter) {
-              return RadioListTile(
+              return RadioListTile<String>(
                 title: Text(filter),
                 value: filter.toLowerCase(),
                 groupValue: _selectedFilter,
                 onChanged: (value) {
                   setState(() {
-                    _selectedFilter = value.toString();
+                    _selectedFilter = value ?? 'all';
                   });
                   Navigator.pop(context);
                 },

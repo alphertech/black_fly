@@ -78,7 +78,7 @@ class _ConnectionCardState extends State<ConnectionCard>
                     ),
                     child: Container(
                       margin: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
                       ),
