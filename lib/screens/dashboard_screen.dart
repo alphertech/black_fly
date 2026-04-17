@@ -20,11 +20,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ServerProvider>(context, listen: false).loadServers().then((_) {
-        // Auto-connect to FIG LA1 for debugging
-        Provider.of<VPNProvider>(context, listen: false).connectToServer('fig-la1');
-      });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Provider.of<ServerProvider>(context, listen: false).loadServers();
+      if (!context.mounted) return;
+      // ignore: use_build_context_synchronously
+      // Auto-connect to FIG LA1 for debugging
+      Provider.of<VPNProvider>(context, listen: false).connectToServer('fig-la1');
     });
   }
 

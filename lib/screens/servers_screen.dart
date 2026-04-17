@@ -24,7 +24,8 @@ class _ServersScreenState extends State<ServersScreen> {
   @override
   Widget build(BuildContext context) {
     final serverProvider = context.watch<ServerProvider>();
-    final servers = serverProvider.getFilteredServers(_selectedFilter, _searchController.text);
+    final servers = serverProvider.getFilteredServers(
+        _selectedFilter, _searchController.text);
 
     return Scaffold(
       appBar: AppBar(
@@ -148,24 +149,15 @@ class _ServersScreenState extends State<ServersScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Filter Servers',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
-            ...['All', 'Recommended', 'Fastest', 'Favorites', 'Europe', 'Asia', 'Americas'].map((filter) {
-              return RadioListTile<String>(
-                title: Text(filter),
-                value: filter.toLowerCase(),
-                groupValue: _selectedFilter,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedFilter = value ?? 'all';
-                  });
-                  Navigator.pop(context);
-                },
-              );
-            }),
+              Container(
+              padding: const EdgeInsets.all(16),
+              child: const Text('Use top chips for filtering'),
+            ),
           ],
         ),
       ),
@@ -218,16 +210,19 @@ class ServerSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    final results = servers.where((server) =>
-        server.country.toLowerCase().contains(query.toLowerCase()) ||
-        server.city.toLowerCase().contains(query.toLowerCase())).toList();
+    final results = servers
+        .where((server) =>
+            server.country.toLowerCase().contains(query.toLowerCase()) ||
+            server.city.toLowerCase().contains(query.toLowerCase()))
+        .toList();
 
     return ListView.builder(
       itemCount: results.length,
       itemBuilder: (context, index) {
         return ListTile(
           title: Text('${results[index].city}, ${results[index].country}'),
-          subtitle: Text('${results[index].ping} ms • ${results[index].load}% load'),
+          subtitle:
+              Text('${results[index].ping} ms • ${results[index].load}% load'),
           leading: Text(results[index].countryCode.toUpperCase()),
           onTap: () {
             close(context, results[index]);
@@ -239,16 +234,20 @@ class ServerSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestions = servers.where((server) =>
-        server.country.toLowerCase().contains(query.toLowerCase()) ||
-        server.city.toLowerCase().contains(query.toLowerCase())).toList();
+    final suggestions = servers
+        .where((server) =>
+            server.country.toLowerCase().contains(query.toLowerCase()) ||
+            server.city.toLowerCase().contains(query.toLowerCase()))
+        .toList();
 
     return ListView.builder(
       itemCount: suggestions.length,
       itemBuilder: (context, index) {
         return ListTile(
-          title: Text('${suggestions[index].city}, ${suggestions[index].country}'),
-          subtitle: Text('${suggestions[index].ping} ms • ${suggestions[index].load}% load'),
+          title:
+              Text('${suggestions[index].city}, ${suggestions[index].country}'),
+          subtitle: Text(
+              '${suggestions[index].ping} ms • ${suggestions[index].load}% load'),
           leading: Text(suggestions[index].countryCode.toUpperCase()),
           onTap: () {
             close(context, suggestions[index]);

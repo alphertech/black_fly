@@ -177,7 +177,9 @@ class _AuthScreenState extends State<AuthScreen>
                 obscureText: _obscureLoginPassword,
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _obscureLoginPassword ? Icons.visibility : Icons.visibility_off,
+                    _obscureLoginPassword
+                        ? Icons.visibility
+                        : Icons.visibility_off,
                   ),
                   onPressed: () {
                     setState(() {
@@ -192,56 +194,58 @@ class _AuthScreenState extends State<AuthScreen>
                   return null;
                 },
               ),
-          const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+              const SizedBox(height: 12),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Checkbox(
-                    value: _rememberMe,
-                    onChanged: (value) {
-                      setState(() {
-                        _rememberMe = value ?? false;
-                      });
-                    },
-                    activeColor: const Color(0xFF2A9D8F),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: _rememberMe,
+                        onChanged: (value) {
+                          setState(() {
+                            _rememberMe = value ?? false;
+                          });
+                        },
+                        activeColor: const Color(0xFF2A9D8F),
+                      ),
+                      const Text('Remember me',
+                          style: TextStyle(color: Colors.grey)),
+                    ],
                   ),
-                  const Text('Remember me',
-                      style: TextStyle(color: Colors.grey)),
+                  TextButton(
+                    onPressed: _showForgotPasswordDialog,
+                    child: const Text(
+                      'Forgot password?',
+                      style: TextStyle(color: Color(0xFF2A9D8F)),
+                    ),
+                  ),
                 ],
               ),
-              TextButton(
-                onPressed: _showForgotPasswordDialog,
-                child: const Text(
-                  'Forgot password?',
-                  style: TextStyle(color: Color(0xFF2A9D8F)),
+              const SizedBox(height: 20),
+              CustomButton(
+                text: 'Login',
+                onPressed: _handleLogin,
+                isLoading: _isLoading,
+              ),
+              const SizedBox(height: 20),
+              const Divider(color: Colors.grey),
+              const SizedBox(height: 20),
+              OutlinedButton.icon(
+                onPressed: _handleGoogleLogin,
+                icon: const Icon(Icons.g_mobiledata, size: 24),
+                label: const Text('Continue with Google'),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  side: const BorderSide(color: Colors.grey),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 20),
-          CustomButton(
-            text: 'Login',
-            onPressed: _handleLogin,
-            isLoading: _isLoading,
-          ),
-          const SizedBox(height: 20),
-          const Divider(color: Colors.grey),
-          const SizedBox(height: 20),
-          OutlinedButton.icon(
-            onPressed: _handleGoogleLogin,
-            icon: const Icon(Icons.g_mobiledata, size: 24),
-            label: const Text('Continue with Google'),
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              side: const BorderSide(color: Colors.grey),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -325,7 +329,9 @@ class _AuthScreenState extends State<AuthScreen>
             obscureText: _obscureRegConfirmPassword,
             suffixIcon: IconButton(
               icon: Icon(
-                _obscureRegConfirmPassword ? Icons.visibility : Icons.visibility_off,
+                _obscureRegConfirmPassword
+                    ? Icons.visibility
+                    : Icons.visibility_off,
               ),
               onPressed: () {
                 setState(() {
@@ -421,21 +427,19 @@ class _AuthScreenState extends State<AuthScreen>
 
       setState(() => _isLoading = false);
 
-      if (success && mounted) {
-        if (context.mounted) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const DashboardScreen()),
-          );
-        }
-      } else if (mounted) {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Invalid email or password'),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
+      if (!context.mounted) return;
+
+      if (success) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const DashboardScreen()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Invalid email or password'),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
     }
   }
@@ -454,26 +458,24 @@ class _AuthScreenState extends State<AuthScreen>
 
       setState(() => _isLoading = false);
 
-      if (success && mounted) {
-        if (context.mounted) {
-          _tabController.animateTo(0);
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Account created successfully! Please login.'),
-              backgroundColor: Colors.green,
-            ),
-          );
-        }
+      if (!context.mounted) return;
+
+      if (success) {
+        _tabController.animateTo(0);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Account created successfully! Please login.'),
+            backgroundColor: Colors.green,
+          ),
+        );
         _loginEmailController.text = _regEmailController.text;
-      } else if (mounted) {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Registration failed. Email may already exist.'),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Registration failed. Email may already exist.'),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
     } else if (!_agreeTerms) {
       ScaffoldMessenger.of(context).showSnackBar(
